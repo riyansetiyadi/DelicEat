@@ -7,12 +7,12 @@ class ErrorRefresh extends StatelessWidget {
   const ErrorRefresh(
       {super.key,
       required this.errorTitle,
-      required this.refreshTitle,
-      required this.onPressed});
+      this.refreshTitle,
+      this.onPressed});
 
   final String errorTitle;
-  final String refreshTitle;
-  final VoidCallback onPressed;
+  final String? refreshTitle;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -29,28 +29,30 @@ class ErrorRefresh extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 10),
-              Text(
-                refreshTitle,
-                style: Theme.of(context).textTheme.bodyLarge,
-                textAlign: TextAlign.center,
-              ),
-              IconButton(
-                  onPressed: onPressed,
-                  icon: Icon(
-                    defaultTargetPlatform == TargetPlatform.iOS
-                        ? CupertinoIcons.refresh
-                        : Icons.refresh,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                  style: ButtonStyle(
-                    iconSize: MaterialStateProperty.all<double>(35),
-                    iconColor: MaterialStateProperty.all<Color>(primaryColor),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(secondaryColor),
-                  )),
-            ],
-          ),
+              if (refreshTitle != null)
+                Text(
+                  refreshTitle!,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
+              if (onPressed != null)
+                IconButton(
+                    onPressed: onPressed,
+                    icon: Icon(
+                      defaultTargetPlatform == TargetPlatform.iOS
+                          ? CupertinoIcons.refresh
+                          : Icons.refresh,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                    style: ButtonStyle(
+                      iconSize: MaterialStateProperty.all<double>(35),
+                      iconColor: MaterialStateProperty.all<Color>(primaryColor),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(secondaryColor),
+                    )),
+              ],
+            ),
         ),
       ),
     );

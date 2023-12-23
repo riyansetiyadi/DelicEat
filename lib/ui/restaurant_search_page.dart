@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app_submission_dicoding/common/styles.dart';
 import 'package:restaurant_app_submission_dicoding/widgets/custom_cupertino_search_text_field_widget.dart';
+import 'package:restaurant_app_submission_dicoding/widgets/handle_error_refresh_widget.dart';
 import 'package:restaurant_app_submission_dicoding/widgets/restaurant_list_view_widget.dart';
 import 'package:restaurant_app_submission_dicoding/provider/search_restaurant_provider.dart';
 import 'package:restaurant_app_submission_dicoding/widgets/platform_widget.dart';
@@ -40,6 +41,7 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_rounded),
           onPressed: () {
+            Provider.of<SearchRestaurantProvider>(context, listen: false).setState(ResultState.init);
             Navigator.pop(context);
           },
         ),
@@ -54,6 +56,7 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
         leading: IconButton(
           icon: const Icon(CupertinoIcons.back),
           onPressed: () {
+            Provider.of<SearchRestaurantProvider>(context, listen: false).setState(ResultState.init);
             Navigator.pop(context);
           },
         ),
@@ -131,37 +134,18 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
               restaurantList: state.restaurantList,
             );
           } else if (state.state == ResultState.noData) {
-            return Center(
-              child: Text(
-                'No data available.',
-                style: Theme.of(context).textTheme.bodyMedium,
-                textAlign: TextAlign.center,
-              ),
-            );
+            return const ErrorRefresh(errorTitle: 'No data available.');
           } else if (state.state == ResultState.error) {
-            return Center(
-              child: Text(
-                'Data retrieval failed. Please check your connection.',
-                style: Theme.of(context).textTheme.bodyMedium,
-                textAlign: TextAlign.center,
-              ),
-            );
+            return const ErrorRefresh(
+                errorTitle:
+                    'Data retrieval failed. Please check your connection.');
           } else if (state.state == ResultState.init) {
-            return Center(
-              child: Text(
-                "Search for your favorite restaurants and find exactly what you're looking for",
-                style: Theme.of(context).textTheme.bodyMedium,
-                textAlign: TextAlign.center,
-              ),
-            );
+            return const ErrorRefresh(
+                errorTitle:
+                    "Search for your favorite restaurants and find exactly what you're looking for");
           } else {
-            return Center(
-              child: Text(
-                'Error retrieving data. Please try again later.',
-                style: Theme.of(context).textTheme.bodyMedium,
-                textAlign: TextAlign.center,
-              ),
-            );
+            return const ErrorRefresh(
+                errorTitle: 'Error retrieving data. Please try again later.');
           }
         }))
       ],
