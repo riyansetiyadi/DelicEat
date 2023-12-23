@@ -490,58 +490,61 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Leave a Review'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: _textNameController,
-                  showCursor: true,
-                  cursorColor: secondaryColor,
-                  textCapitalization: TextCapitalization.words,
-                  decoration: const InputDecoration(
-                    labelText: 'Your Name',
-                    labelStyle: TextStyle(color: Colors.black),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: secondaryColor,
-                        width: 2.0,
+          content: Padding(
+            padding: const EdgeInsets.only(top: 3.0),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: _textNameController,
+                    showCursor: true,
+                    cursorColor: secondaryColor,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: const InputDecoration(
+                      labelText: 'Your Name',
+                      labelStyle: TextStyle(color: Colors.black),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: secondaryColor,
+                          width: 2.0,
+                        ),
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: secondaryColor,
-                        width: 2.0,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16.0),
-                TextFormField(
-                  controller: _textReviewController,
-                  maxLines: null,
-                  minLines: 4,
-                  keyboardType: TextInputType.text,
-                  showCursor: true,
-                  cursorColor: secondaryColor,
-                  textCapitalization: TextCapitalization.sentences,
-                  decoration: const InputDecoration(
-                    labelText: 'Your Review',
-                    labelStyle: TextStyle(color: Colors.black),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: secondaryColor,
-                        width: 2.0,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: secondaryColor,
-                        width: 2.0,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: secondaryColor,
+                          width: 2.0,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 16.0),
+                  TextFormField(
+                    controller: _textReviewController,
+                    maxLines: null,
+                    minLines: 4,
+                    keyboardType: TextInputType.text,
+                    showCursor: true,
+                    cursorColor: secondaryColor,
+                    textCapitalization: TextCapitalization.sentences,
+                    decoration: const InputDecoration(
+                      labelText: 'Your Review',
+                      labelStyle: TextStyle(color: Colors.black),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: secondaryColor,
+                          width: 2.0,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: secondaryColor,
+                          width: 2.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           actions: [
@@ -588,6 +591,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
       customerReviews.sort((a, b) => b.date.compareTo(a.date));
       return SizedBox(
         height: MediaQuery.of(context).size.height * 0.60,
+        width: double.infinity,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
