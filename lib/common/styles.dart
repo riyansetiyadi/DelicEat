@@ -16,7 +16,7 @@ final TextTheme myTextTheme = TextTheme(
   headlineSmall:
       GoogleFonts.merriweather(fontSize: 23, fontWeight: FontWeight.w400),
   titleLarge: GoogleFonts.merriweather(
-      fontSize: 19, fontWeight: FontWeight.w500, letterSpacing: 0.15, color: Colors.white),
+      fontSize: 19, fontWeight: FontWeight.w500, letterSpacing: 0.15),
   titleMedium: GoogleFonts.merriweather(
       fontSize: 15, fontWeight: FontWeight.w400, letterSpacing: 0.15),
   titleSmall: GoogleFonts.merriweather(

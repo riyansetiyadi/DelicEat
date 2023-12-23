@@ -1,12 +1,25 @@
+import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 import 'package:restaurant_app_submission_dicoding/common/styles.dart';
-import 'package:restaurant_app_submission_dicoding/data/model/restaurant.dart';
-import 'package:restaurant_app_submission_dicoding/ui/restaurant_detail_page.dart';
+import 'package:restaurant_app_submission_dicoding/widgets/custom_cupertino_search_text_field_widget.dart';
+import 'package:restaurant_app_submission_dicoding/widgets/handle_error_refresh_widget.dart';
+import 'package:restaurant_app_submission_dicoding/widgets/restaurant_list_view_widget.dart';
+import 'package:restaurant_app_submission_dicoding/provider/list_restaurant_provider.dart';
+import 'package:restaurant_app_submission_dicoding/ui/restaurant_search_page.dart';
 import 'package:restaurant_app_submission_dicoding/widgets/platform_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RestaurantListPage extends StatefulWidget {
   static const routeName = '/restaurant_list_page';
+
+  static Route<dynamic> route() {
+    return CupertinoPageRoute(
+      builder: (BuildContext context) {
+        return const RestaurantListPage();
+      },
+    );
+  }
 
   const RestaurantListPage({Key? key}) : super(key: key);
 
@@ -15,112 +28,105 @@ class RestaurantListPage extends StatefulWidget {
 }
 
 class _RestaurantListPageState extends State<RestaurantListPage> {
-  late Future<String> searchData;
-  TextEditingController searchController = TextEditingController();
-
-    @override
-  void initState() {
-    super.initState();
-    searchData = DefaultAssetBundle.of(context).loadString('assets/local_restaurant.json');
-  }
-  
   Widget _buildList(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: TextField(
-            controller: searchController,
-            decoration: const InputDecoration(
-              labelText: 'Cari...',
-              suffixIcon: Icon(Icons.search),
+        Hero(
+          tag: 'search',
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Material(
+              child: defaultTargetPlatform == TargetPlatform.iOS
+                  ? CustomCupertinoSearchTextField(
+                      onTap: () async {
+                        Navigator.pushNamed(
+                            context, RestaurantSearchPage.routeName);
+                      },
+                      readOnly: true,
+                    )
+                  : TextField(
+                      onTap: () async {
+                        Navigator.pushNamed(
+                            context, RestaurantSearchPage.routeName);
+                      },
+                      readOnly: true,
+                      decoration: const InputDecoration(
+                        labelText: 'Search...',
+                        suffixIcon: Icon(
+                          Icons.search,
+                          color: secondaryColor,
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: secondaryColor,
+                            width: 2.0,
+                          ),
+                        ),
+                      ),
+                    ),
             ),
-            onChanged: (value) {
-              setState(() {});
-            },
           ),
         ),
         Expanded(
-          child: FutureBuilder<String>(
-            future: searchData,
-            builder: (context, snapshot) {
-              final List<Restaurant> restaurant = parseRestaurants(snapshot.data).where((restaurant) => restaurant.name.toLowerCase().contains(searchController.text.toLowerCase())).toList();
-              return ListView.builder(
-                itemCount: restaurant.length,
-                itemBuilder: (context, index) {
-                  return _buildRestaurantItem(context, restaurant[index]);
-                },
-              );
+          child: Consumer<ListRestaurantProvider>(
+            builder: (context, state, _) {
+              if (state.state == ResultState.loading) {
+                return Center(
+                    child: defaultTargetPlatform == TargetPlatform.iOS
+                        ? const CupertinoActivityIndicator(
+                            radius: 20.0,
+                          )
+                        : const CircularProgressIndicator(
+                            color: secondaryColor,
+                          ));
+              } else if (state.state == ResultState.hasData) {
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    await Provider.of<ListRestaurantProvider>(context,
+                            listen: false)
+                        .refreshRestaurant();
+                  },
+                  color: secondaryColor,
+                  child: RestaurantListView(
+                    restaurantList: state.restaurantList,
+                  ),
+                );
+              } else if (state.state == ResultState.noData) {
+                return ErrorRefresh(
+                  errorTitle: 'No data available.',
+                  refreshTitle: 'Refresh',
+                  onPressed: () async {
+                    await Provider.of<ListRestaurantProvider>(context,
+                            listen: false)
+                        .refreshRestaurant();
+                  },
+                );
+              } else if (state.state == ResultState.error) {
+                return ErrorRefresh(
+                  errorTitle:
+                      'Data retrieval failed. Please check your connection.',
+                  refreshTitle: 'Refresh',
+                  onPressed: () async {
+                    await Provider.of<ListRestaurantProvider>(context,
+                            listen: false)
+                        .refreshRestaurant();
+                  },
+                );
+              } else {
+                return ErrorRefresh(
+                  errorTitle: 'Error retrieving data. Please try again later.',
+                  refreshTitle: 'Refresh',
+                  onPressed: () async {
+                    await Provider.of<ListRestaurantProvider>(context,
+                            listen: false)
+                        .refreshRestaurant();
+                  },
+                );
+              }
             },
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildRestaurantItem(BuildContext context, Restaurant restaurant) {
-    return Card(
-      color: primaryColor,
-      shape: RoundedRectangleBorder(
-        side: const BorderSide(color: Colors.grey, width: 0.5),
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: ListTile(
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        leading: Hero(
-          tag: restaurant.pictureId,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(16.0),
-            child: SizedBox(
-              width: 100,
-              child: Image.network(
-                restaurant.pictureId,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
-        title: Text(
-          restaurant.name,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        subtitle: Column(
-          children: [
-            Row(
-              children: [
-                const Icon(
-                  Icons.location_on_outlined,
-                  color: secondaryColor,
-                  size: 15,
-                ),
-                Text(
-                  restaurant.city,
-                  style: Theme.of(context).textTheme.bodySmall
-                ),
-              ]
-            ),
-            Row(
-              children: [
-                const Icon(
-                  Icons.star_rate_rounded,
-                  color: Colors.yellowAccent,
-                  size: 15,
-                ),
-                Text(
-                  restaurant.rating.toString(),
-                  style: Theme.of(context).textTheme.bodySmall
-                ),
-              ]
-            ),
-          ],
-        ),
-        trailing: const Icon(Icons.arrow_forward_ios_rounded),
-        onTap: () {
-          Navigator.pushNamed(context, RestaurantDetailPage.routeName,
-              arguments: restaurant);
-        },
-      ),
     );
   }
 
