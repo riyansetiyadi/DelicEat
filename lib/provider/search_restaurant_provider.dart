@@ -21,7 +21,7 @@ class SearchRestaurantProvider extends ChangeNotifier {
 
   ResultState _state = ResultState.init;
   ResultState get state => _state;
-  void setState(ResultState value) => _state = value;
+  void resetState() => _state = ResultState.init;
 
   Future<dynamic> refreshRestaurant(String query) async {
     _fetchRestaurantByQuery(query);
