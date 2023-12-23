@@ -18,6 +18,7 @@ class ReviewRestaurantProvider extends ChangeNotifier {
 
   ReviewState _state = ReviewState.init;
   ReviewState get state => _state;
+  void resetState() => _state = ReviewState.init;
 
   CustomerGetReviews? _customerReviewsResult;
   CustomerGetReviews? get customerReviews => _customerReviewsResult;

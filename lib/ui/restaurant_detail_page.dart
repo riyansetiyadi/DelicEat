@@ -364,15 +364,30 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                             color: secondaryColor,
                             child: Center(
                               child: defaultTargetPlatform == TargetPlatform.iOS
-                                  ? const CircularProgressIndicator(
-                                      color: secondaryColor,
-                                    )
-                                  : const CupertinoActivityIndicator(
+                                  ? const CupertinoActivityIndicator(
                                       radius: 20.0,
-                                    ),
+                                    )
+                                  : const CircularProgressIndicator(
+                                      color: primaryColor,
+                                    )
                             ),
                           );
                         } else if (state.state == ReviewState.hasData) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            final snackBar = SnackBar(
+                              backgroundColor: primaryColor,
+                              content: Text(
+                                state.message,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge
+                                    ?.copyWith(color: secondaryColor),
+                              ),
+                              duration: const Duration(seconds: 3),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          });
+                          state.resetState();
                           return _buildReviewsRestaurant(
                               state.customerReviews!.customerReviews);
                         } else if (state.state == ReviewState.noData) {
@@ -397,28 +412,11 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
     );
   }
 
-  void _onPressAddReviewButton(BuildContext context) async {
-    final String? resultMessage;
+  void _onPressAddReviewButton(BuildContext context) {
     if (defaultTargetPlatform == TargetPlatform.iOS) {
-      resultMessage = await _showReviewDialogIos(context);
+      _showReviewDialogIos(context);
     } else {
-      resultMessage = await _showReviewDialogAndroid(context);
-    }
-
-    if (resultMessage != null) {
-      if (!mounted) return;
-      final snackBar = SnackBar(
-        backgroundColor: primaryColor,
-        content: Text(
-          resultMessage,
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(color: secondaryColor),
-        ),
-        duration: const Duration(seconds: 3),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      _showReviewDialogAndroid(context);
     }
   }
 
@@ -461,8 +459,8 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
             ),
           ),
           CupertinoDialogAction(
-            onPressed: () async {
-              final message = await Provider.of<ReviewRestaurantProvider>(
+            onPressed: () {
+              Provider.of<ReviewRestaurantProvider>(
                       context,
                       listen: false)
                   .addReviews(
@@ -474,9 +472,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
 
               _textNameController.clear();
               _textReviewController.clear();
-
-              if (!mounted) return;
-              Navigator.pop(context, message);
+              Navigator.pop(context);
             },
             child: const Text(
               'Submit',
@@ -561,8 +557,8 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
               ),
             ),
             ElevatedButton(
-              onPressed: () async {
-                final message = await Provider.of<ReviewRestaurantProvider>(
+              onPressed: () {
+                Provider.of<ReviewRestaurantProvider>(
                         context,
                         listen: false)
                     .addReviews(
@@ -575,8 +571,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                 _textNameController.clear();
                 _textReviewController.clear();
 
-                if (!mounted) return;
-                Navigator.pop(context, message);
+                Navigator.pop(context);
               },
               child: const Text('Submit'),
             ),
