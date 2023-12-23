@@ -93,7 +93,7 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
                       showCursor: true,
                       cursorColor: secondaryColor,
                       decoration: InputDecoration(
-                        labelText: 'Search...',
+                        labelText: 'Search',
                         suffixIcon: Icon(
                           defaultTargetPlatform == TargetPlatform.iOS
                               ? CupertinoIcons.search

@@ -51,7 +51,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
                       },
                       readOnly: true,
                       decoration: const InputDecoration(
-                        labelText: 'Search...',
+                        labelText: 'Search',
                         suffixIcon: Icon(
                           Icons.search,
                           color: secondaryColor,
