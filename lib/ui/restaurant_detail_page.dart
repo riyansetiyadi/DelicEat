@@ -113,6 +113,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                     ),
                   ),
                   onPressed: () {
+                    Provider.of<ReviewRestaurantProvider>(context, listen: false).resetState();
                     Navigator.pop(context);
                   },
                 ),
@@ -301,15 +302,40 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                               .headlineSmall
                               ?.copyWith(color: primaryColor),
                         ),
-                        Text(
-                          restaurant.customerReviews != null
-                              ? restaurant.customerReviews!.length.toString()
-                              : '0',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall
-                              ?.copyWith(color: primaryColor),
-                        )
+                        Consumer<ReviewRestaurantProvider>(
+                          builder: (context, state, _) {
+                            if (state.state == ReviewState.init) {
+                              return _buildCustomerReviewsLength(
+                                  restaurant.customerReviews?.length, context);
+                            } else if (state.state == ReviewState.loading) {
+                              return Container(
+                                color: secondaryColor,
+                                child: Center(
+                                    child: defaultTargetPlatform ==
+                                            TargetPlatform.iOS
+                                        ? const CupertinoActivityIndicator(
+                                            radius: 20.0,
+                                          )
+                                        : const CircularProgressIndicator(
+                                            color: primaryColor,
+                                          )),
+                              );
+                            } else if (state.state == ReviewState.hasData) {
+                              return _buildCustomerReviewsLength(
+                                  state.customerReviews?.customerReviews.length,
+                                  context);
+                            } else if (state.state == ReviewState.noData) {
+                              return _buildCustomerReviewsLength(
+                                  restaurant.customerReviews?.length, context);
+                            } else if (state.state == ReviewState.error) {
+                              return _buildCustomerReviewsLength(
+                                  restaurant.customerReviews?.length, context);
+                            } else {
+                              return _buildCustomerReviewsLength(
+                                  restaurant.customerReviews?.length, context);
+                            }
+                          },
+                        ),
                       ],
                     ),
                     const SizedBox(
@@ -363,14 +389,14 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                           return Container(
                             color: secondaryColor,
                             child: Center(
-                              child: defaultTargetPlatform == TargetPlatform.iOS
-                                  ? const CupertinoActivityIndicator(
-                                      radius: 20.0,
-                                    )
-                                  : const CircularProgressIndicator(
-                                      color: primaryColor,
-                                    )
-                            ),
+                                child:
+                                    defaultTargetPlatform == TargetPlatform.iOS
+                                        ? const CupertinoActivityIndicator(
+                                            radius: 20.0,
+                                          )
+                                        : const CircularProgressIndicator(
+                                            color: primaryColor,
+                                          )),
                           );
                         } else if (state.state == ReviewState.hasData) {
                           WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -385,9 +411,9 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                               ),
                               duration: const Duration(seconds: 3),
                             );
-                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                           });
-                          state.resetState();
                           return _buildReviewsRestaurant(
                               state.customerReviews!.customerReviews);
                         } else if (state.state == ReviewState.noData) {
@@ -409,6 +435,14 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
           },
         ),
       ],
+    );
+  }
+
+  Text _buildCustomerReviewsLength(int? reviewsLength, BuildContext context) {
+    return Text(
+      reviewsLength != null ? reviewsLength.toString() : '0',
+      style:
+          Theme.of(context).textTheme.titleSmall?.copyWith(color: primaryColor),
     );
   }
 
@@ -460,9 +494,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
           ),
           CupertinoDialogAction(
             onPressed: () {
-              Provider.of<ReviewRestaurantProvider>(
-                      context,
-                      listen: false)
+              Provider.of<ReviewRestaurantProvider>(context, listen: false)
                   .addReviews(
                       _idRestaurant,
                       CapitalizationHelper()
@@ -561,9 +593,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                Provider.of<ReviewRestaurantProvider>(
-                        context,
-                        listen: false)
+                Provider.of<ReviewRestaurantProvider>(context, listen: false)
                     .addReviews(
                         _idRestaurant,
                         CapitalizationHelper()

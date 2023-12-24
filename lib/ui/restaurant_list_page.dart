@@ -13,14 +13,6 @@ import 'package:flutter/material.dart';
 class RestaurantListPage extends StatefulWidget {
   static const routeName = '/restaurant_list_page';
 
-  static Route<dynamic> route() {
-    return CupertinoPageRoute(
-      builder: (BuildContext context) {
-        return const RestaurantListPage();
-      },
-    );
-  }
-
   const RestaurantListPage({Key? key}) : super(key: key);
 
   @override
@@ -82,9 +74,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
               } else if (state.state == ResultState.hasData) {
                 return RefreshIndicator(
                   onRefresh: () async {
-                    await Provider.of<ListRestaurantProvider>(context,
-                            listen: false)
-                        .refreshRestaurant();
+                    await state.refreshRestaurant();
                   },
                   color: secondaryColor,
                   child: RestaurantListView(
@@ -96,9 +86,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
                   errorTitle: 'No data available.',
                   refreshTitle: 'Refresh',
                   onPressed: () async {
-                    await Provider.of<ListRestaurantProvider>(context,
-                            listen: false)
-                        .refreshRestaurant();
+                    await state.refreshRestaurant();
                   },
                 );
               } else if (state.state == ResultState.error) {
@@ -107,9 +95,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
                       'Data retrieval failed. Please check your connection.',
                   refreshTitle: 'Refresh',
                   onPressed: () async {
-                    await Provider.of<ListRestaurantProvider>(context,
-                            listen: false)
-                        .refreshRestaurant();
+                    await state.refreshRestaurant();
                   },
                 );
               } else {
@@ -117,9 +103,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
                   errorTitle: 'Error retrieving data. Please try again later.',
                   refreshTitle: 'Refresh',
                   onPressed: () async {
-                    await Provider.of<ListRestaurantProvider>(context,
-                            listen: false)
-                        .refreshRestaurant();
+                    await state.refreshRestaurant();
                   },
                 );
               }

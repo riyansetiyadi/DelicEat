@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant_app_submission_dicoding/common/styles.dart';
-import 'package:restaurant_app_submission_dicoding/ui/restaurant_list_page.dart';
+import 'package:restaurant_app_submission_dicoding/ui/home_page.dart';
 import 'package:restaurant_app_submission_dicoding/widgets/platform_widget.dart';
 
 class SplashScreenPage extends StatelessWidget {
@@ -67,11 +67,11 @@ class SplashScreenPage extends StatelessWidget {
               size: 70,
             ),
             onPressed: () {
-              defaultTargetPlatform == TargetPlatform.android
+              defaultTargetPlatform == TargetPlatform.iOS
                   ? Navigator.of(context)
-                      .pushReplacement(RestaurantListPage.route())
+                      .pushReplacement(HomePage.route())
                   : Navigator.pushReplacementNamed(
-                      context, '/restaurant_list_page');
+                      context, HomePage.routeName);
             },
           ),
         ],

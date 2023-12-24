@@ -92,15 +92,27 @@ class Restaurant {
         pictureId: json["pictureId"],
         city: json["city"],
         rating: json["rating"]?.toDouble(),
-        address: json.containsKey('address') ? json["address"] : null,
-        categories: json.containsKey('categories')
-            ? List<Category>.from(
-                json["categories"].map((x) => Category.fromJson(x)))
+        address: json.containsKey('address')
+            ? json['address'] == null
+                ? json["address"]
+                : null
             : null,
-        menus: json.containsKey('menus') ? Menu.fromJson(json["menus"]) : null,
+        categories: json.containsKey('categories')
+            ? json['categories'] != null
+                ? List<Category>.from(
+                    json["categories"].map((x) => Category.fromJson(x)))
+                : null
+            : null,
+        menus: json.containsKey('menus')
+            ? json['menus'] != null
+                ? Menu.fromJson(json["menus"])
+                : null
+            : null,
         customerReviews: json.containsKey('customerReviews')
-            ? List<CustomerReview>.from(
-                json["customerReviews"].map((x) => CustomerReview.fromJson(x)))
+            ? json['customerReviews'] != null
+                ? List<CustomerReview>.from(json["customerReviews"]
+                    .map((x) => CustomerReview.fromJson(x)))
+                : null
             : null,
       );
 
@@ -111,11 +123,13 @@ class Restaurant {
         "pictureId": pictureId,
         "city": city,
         "rating": rating,
-        "categories": categories ??
-            List<dynamic>.from(categories!.map((x) => x.toJson())),
-        "menus": menus ?? menus?.toJson(),
-        "customerReviews": customerReviews ??
-            List<dynamic>.from(customerReviews!.map((x) => x.toJson())),
+        "categories": categories != null
+            ? List<dynamic>.from(categories!.map((x) => x.toJson()))
+            : null,
+        "menus": menus?.toJson(),
+        "customerReviews": customerReviews != null
+            ? List<dynamic>.from(customerReviews!.map((x) => x.toJson()))
+            : null,
       };
 }
 
