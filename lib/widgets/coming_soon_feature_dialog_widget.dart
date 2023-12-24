@@ -13,7 +13,10 @@ comingSoonFeatureDialogWidget(BuildContext context) {
           content: const Text('This feature will be coming soon!'),
           actions: [
             CupertinoDialogAction(
-              child: const Text('Ok'),
+              child: const Text(
+                'Ok',
+                style: TextStyle(color: Colors.black),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -34,7 +37,10 @@ comingSoonFeatureDialogWidget(BuildContext context) {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Ok'),
+              child: const Text(
+                'Ok',
+                style: TextStyle(color: Colors.black),
+              ),
             ),
           ],
         );

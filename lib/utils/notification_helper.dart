@@ -62,10 +62,10 @@ class NotificationHelper {
     );
 
     var titleNotification = "<b>Today Restaurant</b>";
-    var titleRecomendation = restaurant.name;
+    var titleRestaurant = restaurant.name;
 
     await flutterLocalNotificationsPlugin.show(
-        0, titleNotification, titleRecomendation, platformChannelSpecifics,
+        0, titleNotification, titleRestaurant, platformChannelSpecifics,
         payload: json.encode(restaurant.toJson()));
   }
 

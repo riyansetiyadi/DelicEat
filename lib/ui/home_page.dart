@@ -28,7 +28,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _bottomNavIndex = 0;
-  static const String _headlineText = 'Headline';
+  static const String _headlineText = 'Restaurant';
 
   final NotificationHelper _notificationHelper = NotificationHelper();
 
