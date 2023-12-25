@@ -27,6 +27,7 @@ class BackgroundService {
     );
   }
 
+  @pragma("vm:entry-point")
   static Future<void> callback() async {
     final NotificationHelper notificationHelper = NotificationHelper();
     RestaurantList listRestaurants = await ApiService().getAllRestaurant();
