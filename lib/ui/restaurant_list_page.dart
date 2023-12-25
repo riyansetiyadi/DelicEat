@@ -1,7 +1,7 @@
-import 'package:restaurant_app_submission_dicoding/common/styles.dart';
-import 'package:restaurant_app_submission_dicoding/data/model/restaurant.dart';
-import 'package:restaurant_app_submission_dicoding/ui/restaurant_detail_page.dart';
-import 'package:restaurant_app_submission_dicoding/widgets/platform_widget.dart';
+import 'package:deliceat/common/styles.dart';
+import 'package:deliceat/data/model/restaurant.dart';
+import 'package:deliceat/ui/restaurant_detail_page.dart';
+import 'package:deliceat/widgets/platform_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
