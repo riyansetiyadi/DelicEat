@@ -113,7 +113,9 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                     ),
                   ),
                   onPressed: () {
-                    Provider.of<ReviewRestaurantProvider>(context, listen: false).resetState();
+                    Provider.of<ReviewRestaurantProvider>(context,
+                            listen: false)
+                        .resetState();
                     Navigator.pop(context);
                   },
                 ),

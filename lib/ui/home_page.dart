@@ -11,7 +11,7 @@ import 'package:restaurant_app_submission_dicoding/widgets/platform_widget.dart'
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';
-  
+
   static Route<dynamic> route() {
     return CupertinoPageRoute(
       builder: (BuildContext context) {
@@ -39,7 +39,8 @@ class _HomePageState extends State<HomePage> {
 
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
     BottomNavigationBarItem(
-      icon: Icon(Platform.isIOS ? CupertinoIcons.list_bullet : Icons.restaurant),
+      icon:
+          Icon(Platform.isIOS ? CupertinoIcons.list_bullet : Icons.restaurant),
       label: _headlineText,
     ),
     BottomNavigationBarItem(
@@ -78,7 +79,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-    @override
+  @override
   void initState() {
     super.initState();
     _notificationHelper

@@ -68,10 +68,8 @@ class SplashScreenPage extends StatelessWidget {
             ),
             onPressed: () {
               defaultTargetPlatform == TargetPlatform.iOS
-                  ? Navigator.of(context)
-                      .pushReplacement(HomePage.route())
-                  : Navigator.pushReplacementNamed(
-                      context, HomePage.routeName);
+                  ? Navigator.of(context).pushReplacement(HomePage.route())
+                  : Navigator.pushReplacementNamed(context, HomePage.routeName);
             },
           ),
         ],

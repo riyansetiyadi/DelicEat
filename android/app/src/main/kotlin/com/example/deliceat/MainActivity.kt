@@ -1,4 +1,4 @@
-package com.example.restaurant_app_submission_dicoding
+package com.example.deliceat
 
 import io.flutter.embedding.android.FlutterActivity
 

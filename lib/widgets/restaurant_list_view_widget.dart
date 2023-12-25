@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:restaurant_app_submission_dicoding/common/navigation.dart';
 import 'package:restaurant_app_submission_dicoding/common/styles.dart';
 import 'package:restaurant_app_submission_dicoding/data/model/restaurant.dart';
 import 'package:restaurant_app_submission_dicoding/ui/restaurant_detail_page.dart';
@@ -161,10 +162,12 @@ class RestaurantListView extends StatelessWidget {
       trailing: const Icon(
         Icons.arrow_forward,
       ),
-      onTap: () {
-        Navigator.pushNamed(context, RestaurantDetailPage.routeName,
-            arguments: restaurant.id);
-      },
+      onTap: () => Navigation.intentWithData(
+                    RestaurantDetailPage.routeName, restaurant.id),
+      // {
+      //   Navigator.pushNamed(context, RestaurantDetailPage.routeName,
+      //       arguments: restaurant.id);
+      // },
     );
   }
 }

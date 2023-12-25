@@ -41,7 +41,8 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_rounded),
           onPressed: () {
-            Provider.of<SearchRestaurantProvider>(context, listen: false).resetState();
+            Provider.of<SearchRestaurantProvider>(context, listen: false)
+                .resetState();
             Navigator.pop(context);
           },
         ),
@@ -56,7 +57,8 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
         leading: IconButton(
           icon: const Icon(CupertinoIcons.back),
           onPressed: () {
-            Provider.of<SearchRestaurantProvider>(context, listen: false).resetState();
+            Provider.of<SearchRestaurantProvider>(context, listen: false)
+                .resetState();
             Navigator.pop(context);
           },
         ),

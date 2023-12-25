@@ -5,10 +5,7 @@ import 'package:restaurant_app_submission_dicoding/common/styles.dart';
 
 class ErrorRefresh extends StatelessWidget {
   const ErrorRefresh(
-      {super.key,
-      required this.errorTitle,
-      this.refreshTitle,
-      this.onPressed});
+      {super.key, required this.errorTitle, this.refreshTitle, this.onPressed});
 
   final String errorTitle;
   final String? refreshTitle;
@@ -51,8 +48,8 @@ class ErrorRefresh extends StatelessWidget {
                       backgroundColor:
                           MaterialStateProperty.all<Color>(secondaryColor),
                     )),
-              ],
-            ),
+            ],
+          ),
         ),
       ),
     );
