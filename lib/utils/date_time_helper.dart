@@ -38,6 +38,7 @@ class DateTimeHelper {
     final tomorrowDateAndTime = "$tomorrowDate $timeSpecific";
     var resultTomorrow = completeFormat.parseStrict(tomorrowDateAndTime);
 
-    return now.isAfter(resultToday) ? resultTomorrow : resultToday;
+    return now;
+    // return now.isAfter(resultToday) ? resultTomorrow : resultToday;
   }
 }
