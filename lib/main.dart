@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:restaurant_app_submission_dicoding/common/navigation.dart';
 import 'package:restaurant_app_submission_dicoding/data/api/api_service.dart';
+import 'package:restaurant_app_submission_dicoding/data/model/restaurant.dart';
 import 'package:restaurant_app_submission_dicoding/data/preferences/preferences_helper.dart';
 import 'package:restaurant_app_submission_dicoding/provider/detail_restaurant_provider.dart';
 import 'package:restaurant_app_submission_dicoding/provider/list_restaurant_provider.dart';
@@ -37,17 +40,25 @@ void main() async {
   if (Platform.isAndroid) {
     await AndroidAlarmManager.initialize();
   }
+
+  String? selectedNotificationPayload;
+  String initialRoute = SplashScreenPage.routeName;
+  String? idRestaurant;
+
+  final NotificationAppLaunchDetails? notificationAppLaunchDetails = !kIsWeb && Platform.isLinux
+      ? null
+      : await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
+    selectedNotificationPayload = notificationAppLaunchDetails!.notificationResponse?.payload;
+    if (selectedNotificationPayload != null) {
+      var restaurant = Restaurant.fromJson(json.decode(selectedNotificationPayload));
+      idRestaurant = restaurant.id;
+      initialRoute = RestaurantDetailPage.routeName;
+    }
+  }
   await notificationHelper.initNotifications(flutterLocalNotificationsPlugin);
 
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
+  runApp(MultiProvider(
         providers: [
           ChangeNotifierProvider<SearchRestaurantProvider>(
             create: (_) => SearchRestaurantProvider(apiService: ApiService()),
@@ -75,7 +86,7 @@ class MyApp extends StatelessWidget {
             navigatorKey: navigatorKey,
             title: 'DelicEat',
             theme: provider.themeData,
-            initialRoute: SplashScreenPage.routeName,
+            initialRoute: initialRoute,
             routes: {
               HomePage.routeName: (context) => const HomePage(),
               SplashScreenPage.routeName: (context) => const SplashScreenPage(),
@@ -85,7 +96,7 @@ class MyApp extends StatelessWidget {
                   ChangeNotifierProvider<DetailRestaurantProvider>(
                     create: (_) => DetailRestaurantProvider(
                         apiService: ApiService(),
-                        idRestaurant: ModalRoute.of(context)?.settings.arguments
+                        idRestaurant: idRestaurant ?? ModalRoute.of(context)?.settings.arguments
                             as String),
                     child: const RestaurantDetailPage(),
                   ),
@@ -104,6 +115,6 @@ class MyApp extends StatelessWidget {
               );
             },
           );
-        }));
-  }
+        }))
+  );
 }
