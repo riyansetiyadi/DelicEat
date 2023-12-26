@@ -7,6 +7,7 @@ class PreferencesHelper {
 
   static const darkTheme = 'DARK_THEME';
   static const dailyRestaurantNotification = 'DAILY_RESTAURANT';
+  static const firstLaunchApp = 'FIRST_LAUNCH_APP';
 
   Future<bool> get isDarkTheme async {
     final prefs = await sharedPreferences;
@@ -26,5 +27,15 @@ class PreferencesHelper {
   void setDailyRestaurantRecomendation(bool value) async {
     final prefs = await sharedPreferences;
     prefs.setBool(dailyRestaurantNotification, value);
+  }
+
+  Future<bool> get isFirstLaunchApp async {
+    final prefs = await sharedPreferences;
+    return prefs.getBool(firstLaunchApp) ?? true;
+  }
+
+  void setFirstLaunchApp(bool value) async {
+    final prefs = await sharedPreferences;
+    prefs.setBool(firstLaunchApp, value);
   }
 }

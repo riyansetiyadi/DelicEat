@@ -8,13 +8,11 @@ class PreferencesProvider extends ChangeNotifier {
   PreferencesProvider({required this.preferencesHelper}) {
     _getTheme();
     _getDailyRestaurantNotificationPreferences();
+    _getFirstLaunchAppPreferences();
   }
 
   bool _isDarkTheme = false;
   bool get isDarkTheme => _isDarkTheme;
-
-  bool _isDailyRestaurantRecomendationActive = false;
-  bool get isDailyRestaurantRecomendationActive => _isDailyRestaurantRecomendationActive;
 
   ThemeData get themeData => _isDarkTheme ? darkTheme : lightTheme;
 
@@ -23,18 +21,34 @@ class PreferencesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _getDailyRestaurantNotificationPreferences() async {
-    _isDailyRestaurantRecomendationActive = await preferencesHelper.isDailyRestaurantRecomendationActive;
-    notifyListeners();
-  }
-
   void enableDarkTheme(bool value) {
     preferencesHelper.setDarkTheme(value);
     _getTheme();
   }
 
+  bool _isDailyRestaurantRecomendationActive = false;
+  bool get isDailyRestaurantRecomendationActive => _isDailyRestaurantRecomendationActive;
+
+  void _getDailyRestaurantNotificationPreferences() async {
+    _isDailyRestaurantRecomendationActive = await preferencesHelper.isDailyRestaurantRecomendationActive;
+    notifyListeners();
+  }
+
   void enableDailyRestaurantRecomendation(bool value) {
     preferencesHelper.setDailyRestaurantRecomendation(value);
     _getDailyRestaurantNotificationPreferences();
+  }
+
+  bool _isFirstLaunchApp = true;
+  bool get isFirstLaunchApp => _isFirstLaunchApp;
+
+  void _getFirstLaunchAppPreferences() async {
+    _isFirstLaunchApp = await preferencesHelper.isFirstLaunchApp;
+    notifyListeners();
+  }
+
+  void setFirstLaunchAppPreferences(bool value) {
+    preferencesHelper.setFirstLaunchApp(value);
+    _getFirstLaunchAppPreferences();
   }
 }

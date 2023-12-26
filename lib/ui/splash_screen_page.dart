@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:restaurant_app_submission_dicoding/common/styles.dart';
+import 'package:restaurant_app_submission_dicoding/provider/preferences_provider.dart';
 import 'package:restaurant_app_submission_dicoding/ui/home_page.dart';
 import 'package:restaurant_app_submission_dicoding/widgets/platform_widget.dart';
 
@@ -50,28 +52,32 @@ class SplashScreenPage extends StatelessWidget {
           const SizedBox(
             height: 50,
           ),
-          ElevatedButton(
-            style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50.0),
+          Consumer<PreferencesProvider>(builder: (context, provider, child) {
+            return ElevatedButton(
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
                   ),
-                ),
-                backgroundColor:
-                    const MaterialStatePropertyAll<Color>(secondaryColor)),
-            child: Icon(
-              defaultTargetPlatform == TargetPlatform.iOS
-                  ? CupertinoIcons.right_chevron
-                  : Icons.navigate_next_rounded,
-              color: Colors.white,
-              size: 70,
-            ),
-            onPressed: () {
-              defaultTargetPlatform == TargetPlatform.iOS
-                  ? Navigator.of(context).pushReplacement(HomePage.route())
-                  : Navigator.pushReplacementNamed(context, HomePage.routeName);
-            },
-          ),
+                  backgroundColor:
+                      const MaterialStatePropertyAll<Color>(secondaryColor)),
+              child: Icon(
+                defaultTargetPlatform == TargetPlatform.iOS
+                    ? CupertinoIcons.right_chevron
+                    : Icons.navigate_next_rounded,
+                color: Colors.white,
+                size: 70,
+              ),
+              onPressed: () {
+                provider.setFirstLaunchAppPreferences(false);
+                defaultTargetPlatform == TargetPlatform.iOS
+                    ? Navigator.of(context).pushReplacement(HomePage.route())
+                    : Navigator.pushReplacementNamed(
+                        context, HomePage.routeName);
+              },
+            );
+          }),
         ],
       ),
     );

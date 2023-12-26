@@ -61,6 +61,18 @@ void main() async {
   }
   await notificationHelper.initNotifications(flutterLocalNotificationsPlugin);
 
+  bool? isFirstLaunchApp = await PreferencesHelper(
+          sharedPreferences: SharedPreferences.getInstance())
+      .isFirstLaunchApp;
+
+  if (initialRoute == SplashScreenPage.routeName) {
+    if (isFirstLaunchApp) {
+      initialRoute = SplashScreenPage.routeName;
+    } else {
+      initialRoute = HomePage.routeName;
+    }
+  }
+
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider<SearchRestaurantProvider>(
