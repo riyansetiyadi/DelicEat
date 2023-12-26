@@ -51,7 +51,6 @@ class RestaurantListView extends StatelessWidget {
       itemBuilder: (context, index) {
         var restaurant = restaurantList!.restaurant[index];
         return Card(
-          color: primaryColor,
           shape: RoundedRectangleBorder(
             side: const BorderSide(color: Colors.grey, width: 0.5),
             borderRadius: BorderRadius.circular(8.0),

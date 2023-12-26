@@ -59,17 +59,14 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
     return Consumer<DetailRestaurantProvider>(
       builder: (context, state, _) {
         if (state.state == ResultState.loading) {
-          return Container(
-            color: primaryColor,
-            child: Center(
-                child: defaultTargetPlatform == TargetPlatform.iOS
-                    ? const CupertinoActivityIndicator(
-                        radius: 20.0,
-                      )
-                    : const CircularProgressIndicator(
-                        color: secondaryColor,
-                      )),
-          );
+          return Center(
+              child: defaultTargetPlatform == TargetPlatform.iOS
+                  ? const CupertinoActivityIndicator(
+                      radius: 20.0,
+                    )
+                  : const CircularProgressIndicator(
+                      color: secondaryColor,
+                    ));
         } else if (state.state == ResultState.hasData) {
           _idRestaurant = state.restaurantDetail.restaurant.id;
           return _buildDetailRestaurant(

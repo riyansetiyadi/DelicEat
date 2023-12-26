@@ -57,6 +57,8 @@ ThemeData lightTheme = ThemeData(
       ),
     ),
   ),
+  inputDecorationTheme: const InputDecorationTheme(
+      floatingLabelStyle: TextStyle(color: Colors.black)),
 );
 
 ThemeData darkTheme = ThemeData.dark().copyWith(
@@ -80,4 +82,6 @@ ThemeData darkTheme = ThemeData.dark().copyWith(
       ),
     ),
   ),
+  inputDecorationTheme: const InputDecorationTheme(
+      floatingLabelStyle: TextStyle(color: Colors.white)),
 );

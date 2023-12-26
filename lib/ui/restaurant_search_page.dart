@@ -102,7 +102,6 @@ class _RestaurantSearchPageState extends State<RestaurantSearchPage> {
                               : Icons.search,
                           color: secondaryColor,
                         ),
-                        labelStyle: const TextStyle(color: Colors.black),
                         enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: secondaryColor,

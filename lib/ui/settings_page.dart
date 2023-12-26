@@ -33,16 +33,22 @@ class SettingsPage extends StatelessWidget {
   }
 
   Widget _buildList(BuildContext context) {
-    return Consumer<PreferencesProvider>(builder: (context, provider, child) {
+    return Consumer<PreferencesProvider>(
+        builder: (context, preferences, child) {
       return ListView(
         children: [
           Material(
             child: ListTile(
               title: const Text('Dark Theme'),
               trailing: Switch.adaptive(
-                value: provider.isDarkTheme,
+                activeColor:
+                    preferences.isDarkTheme ? darkPrimaryColor : primaryColor,
+                activeTrackColor: preferences.isDarkTheme
+                    ? darkSecondaryColor
+                    : secondaryColor,
+                value: preferences.isDarkTheme,
                 onChanged: (value) {
-                  provider.enableDarkTheme(value);
+                  preferences.enableDarkTheme(value);
                 },
               ),
             ),
@@ -53,14 +59,18 @@ class SettingsPage extends StatelessWidget {
               trailing: Consumer<SchedulingProvider>(
                 builder: (context, scheduled, _) {
                   return Switch.adaptive(
-                    activeColor: primaryColor,
-                    activeTrackColor: secondaryColor,
-                    value: provider.isDailyRestaurantRecomendationActive,
+                    activeColor: preferences.isDarkTheme
+                        ? darkPrimaryColor
+                        : primaryColor,
+                    activeTrackColor: preferences.isDarkTheme
+                        ? darkSecondaryColor
+                        : secondaryColor,
+                    value: preferences.isDailyRestaurantRecomendationActive,
                     onChanged: (value) async {
                       if (Platform.isIOS) {
                         comingSoonFeatureDialogWidget(context);
                       } else {
-                        provider.enableDailyRestaurantRecomendation(value);
+                        preferences.enableDailyRestaurantRecomendation(value);
                         scheduled.scheduledRestaurantRecomendation(value);
                       }
                     },
