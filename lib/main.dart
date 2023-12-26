@@ -45,13 +45,16 @@ void main() async {
   String initialRoute = SplashScreenPage.routeName;
   String? idRestaurant;
 
-  final NotificationAppLaunchDetails? notificationAppLaunchDetails = !kIsWeb && Platform.isLinux
+  final NotificationAppLaunchDetails? notificationAppLaunchDetails = !kIsWeb &&
+          Platform.isLinux
       ? null
       : await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
-    selectedNotificationPayload = notificationAppLaunchDetails!.notificationResponse?.payload;
+    selectedNotificationPayload =
+        notificationAppLaunchDetails!.notificationResponse?.payload;
     if (selectedNotificationPayload != null) {
-      var restaurant = Restaurant.fromJson(json.decode(selectedNotificationPayload));
+      var restaurant =
+          Restaurant.fromJson(json.decode(selectedNotificationPayload));
       idRestaurant = restaurant.id;
       initialRoute = RestaurantDetailPage.routeName;
     }
@@ -59,62 +62,62 @@ void main() async {
   await notificationHelper.initNotifications(flutterLocalNotificationsPlugin);
 
   runApp(MultiProvider(
-        providers: [
-          ChangeNotifierProvider<SearchRestaurantProvider>(
-            create: (_) => SearchRestaurantProvider(apiService: ApiService()),
-          ),
-          ChangeNotifierProvider<ListRestaurantProvider>(
-            create: (_) => ListRestaurantProvider(apiService: ApiService()),
-          ),
-          ChangeNotifierProvider<ReviewRestaurantProvider>(
-            create: (_) => ReviewRestaurantProvider(apiService: ApiService()),
-          ),
-          ChangeNotifierProvider<SchedulingProvider>(
-            create: (_) => SchedulingProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (_) => PreferencesProvider(
-              preferencesHelper: PreferencesHelper(
-                sharedPreferences: SharedPreferences.getInstance(),
-              ),
+      providers: [
+        ChangeNotifierProvider<SearchRestaurantProvider>(
+          create: (_) => SearchRestaurantProvider(apiService: ApiService()),
+        ),
+        ChangeNotifierProvider<ListRestaurantProvider>(
+          create: (_) => ListRestaurantProvider(apiService: ApiService()),
+        ),
+        ChangeNotifierProvider<ReviewRestaurantProvider>(
+          create: (_) => ReviewRestaurantProvider(apiService: ApiService()),
+        ),
+        ChangeNotifierProvider<SchedulingProvider>(
+          create: (_) => SchedulingProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PreferencesProvider(
+            preferencesHelper: PreferencesHelper(
+              sharedPreferences: SharedPreferences.getInstance(),
             ),
           ),
-        ],
-        child:
-            Consumer<PreferencesProvider>(builder: (context, provider, child) {
-          return MaterialApp(
-            navigatorKey: navigatorKey,
-            title: 'DelicEat',
-            theme: provider.themeData,
-            initialRoute: initialRoute,
-            routes: {
-              HomePage.routeName: (context) => const HomePage(),
-              SplashScreenPage.routeName: (context) => const SplashScreenPage(),
-              RestaurantListPage.routeName: (context) =>
-                  const RestaurantListPage(),
-              RestaurantDetailPage.routeName: (context) =>
-                  ChangeNotifierProvider<DetailRestaurantProvider>(
-                    create: (_) => DetailRestaurantProvider(
-                        apiService: ApiService(),
-                        idRestaurant: idRestaurant ?? ModalRoute.of(context)?.settings.arguments
-                            as String),
-                    child: const RestaurantDetailPage(),
-                  ),
-              RestaurantSearchPage.routeName: (context) =>
-                  const RestaurantSearchPage(),
-            },
-            builder: (context, child) {
-              return CupertinoTheme(
-                data: CupertinoThemeData(
-                  brightness:
-                      provider.isDarkTheme ? Brightness.dark : Brightness.light,
+        ),
+      ],
+      child: Consumer<PreferencesProvider>(builder: (context, provider, child) {
+        return MaterialApp(
+          navigatorKey: navigatorKey,
+          title: 'DelicEat',
+          theme: provider.themeData,
+          initialRoute: initialRoute,
+          routes: {
+            HomePage.routeName: (context) => const HomePage(),
+            SplashScreenPage.routeName: (context) => const SplashScreenPage(),
+            RestaurantListPage.routeName: (context) =>
+                const RestaurantListPage(),
+            RestaurantDetailPage.routeName: (context) =>
+                ChangeNotifierProvider<DetailRestaurantProvider>(
+                  create: (_) => DetailRestaurantProvider(
+                      apiService: ApiService(),
+                      idRestaurant: ModalRoute.of(context)?.settings.arguments
+                              as String? ??
+                          idRestaurant ??
+                          ''),
+                  child: const RestaurantDetailPage(),
                 ),
-                child: Material(
-                  child: child,
-                ),
-              );
-            },
-          );
-        }))
-  );
+            RestaurantSearchPage.routeName: (context) =>
+                const RestaurantSearchPage(),
+          },
+          builder: (context, child) {
+            return CupertinoTheme(
+              data: CupertinoThemeData(
+                brightness:
+                    provider.isDarkTheme ? Brightness.dark : Brightness.light,
+              ),
+              child: Material(
+                child: child,
+              ),
+            );
+          },
+        );
+      })));
 }

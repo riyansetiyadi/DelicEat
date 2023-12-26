@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app_submission_dicoding/common/styles.dart';
+import 'package:restaurant_app_submission_dicoding/ui/home_page.dart';
 import 'package:restaurant_app_submission_dicoding/widgets/handle_error_back_widget.dart';
 import 'package:restaurant_app_submission_dicoding/data/model/restaurant.dart';
 import 'package:flutter/material.dart';
@@ -116,7 +117,11 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                     Provider.of<ReviewRestaurantProvider>(context,
                             listen: false)
                         .resetState();
-                    Navigator.pop(context);
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    } else {
+                      Navigator.pushNamed(context, HomePage.routeName);
+                    }
                   },
                 ),
                 backgroundColor: secondaryColor,

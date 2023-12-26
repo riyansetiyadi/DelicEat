@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant_app_submission_dicoding/common/styles.dart';
+import 'package:restaurant_app_submission_dicoding/ui/home_page.dart';
 
 class ErrorBack extends StatelessWidget {
   const ErrorBack(
@@ -27,7 +28,13 @@ class ErrorBack extends StatelessWidget {
               const SizedBox(height: 10),
               defaultTargetPlatform == TargetPlatform.iOS
                   ? CupertinoButton(
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () {
+                        if (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        } else {
+                          Navigator.pushNamed(context, HomePage.routeName);
+                        }
+                      },
                       color: secondaryColor,
                       child: Text(
                         backTitle,
@@ -36,7 +43,13 @@ class ErrorBack extends StatelessWidget {
                       ),
                     )
                   : ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () {
+                        if (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        } else {
+                          Navigator.pushNamed(context, HomePage.routeName);
+                        }
+                      },
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(secondaryColor),
