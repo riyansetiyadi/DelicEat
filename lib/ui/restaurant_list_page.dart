@@ -125,6 +125,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
     return Scaffold(
       appBar: AppBar(
         title: _titleAppBar(context),
+        automaticallyImplyLeading: false,
       ),
       body: _buildList(context),
     );
