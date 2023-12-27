@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:restaurant_app_submission_dicoding/common/navigation.dart';
 import 'package:restaurant_app_submission_dicoding/common/styles.dart';
 import 'package:restaurant_app_submission_dicoding/data/model/restaurant.dart';
+import 'package:restaurant_app_submission_dicoding/provider/database_provider.dart';
 import 'package:restaurant_app_submission_dicoding/ui/restaurant_detail_page.dart';
 import 'package:restaurant_app_submission_dicoding/widgets/platform_widget.dart';
 
@@ -47,24 +49,34 @@ class RestaurantListView extends StatelessWidget {
   ListView _buildListViewRestaurant() {
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: restaurantList!.restaurant.length,
+      itemCount:
+          restaurantList?.founded ?? restaurantList?.restaurant.length ?? 0,
       itemBuilder: (context, index) {
         var restaurant = restaurantList!.restaurant[index];
-        return Card(
-          shape: RoundedRectangleBorder(
-            side: const BorderSide(color: Colors.grey, width: 0.5),
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          child: defaultTargetPlatform == TargetPlatform.iOS
-              ? _buildListTileIos(restaurant, context)
-              : _buildListTileAndroid(restaurant, context),
-        );
+        return Consumer<DatabaseProvider>(builder: (context, provider, child) {
+          return FutureBuilder<bool>(
+              future: provider.isFavorite(restaurant.id),
+              builder: (context, snapshot) {
+                var isFavorite = snapshot.data ?? false;
+                return Card(
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: Colors.grey, width: 0.5),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: defaultTargetPlatform == TargetPlatform.iOS
+                      ? _buildListTileIos(
+                          restaurant, context, isFavorite, provider)
+                      : _buildListTileAndroid(
+                          restaurant, context, isFavorite, provider),
+                );
+              });
+        });
       },
     );
   }
 
-  CupertinoListTile _buildListTileIos(
-      Restaurant restaurant, BuildContext context) {
+  CupertinoListTile _buildListTileIos(Restaurant restaurant,
+      BuildContext context, bool isFavorite, DatabaseProvider provider) {
     return CupertinoListTile(
       padding: const EdgeInsets.symmetric(
         horizontal: 16.0,
@@ -107,17 +119,43 @@ class RestaurantListView extends StatelessWidget {
           ]),
         ],
       ),
-      trailing: const Icon(
-        CupertinoIcons.forward,
-      ),
-      onTap: () {
-        Navigator.pushNamed(context, RestaurantDetailPage.routeName,
-            arguments: restaurant.id);
-      },
+      trailing: isFavorite
+          ? IconButton(
+              icon: const Icon(CupertinoIcons.heart_fill),
+              color: Colors.redAccent,
+              onPressed: () {
+                provider.removeFavorite(restaurant.id).then((message) {
+                  final snackBar = SnackBar(
+                    content: Text(
+                      message,
+                    ),
+                    duration: const Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                });
+              })
+          : IconButton(
+              icon: const Icon(CupertinoIcons.heart),
+              color: Colors.grey,
+              onPressed: () {
+                provider.addFavorites(restaurant).then((message) {
+                  final snackBar = SnackBar(
+                    content: Text(
+                      message,
+                    ),
+                    duration: const Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                });
+              },
+            ),
+      onTap: () => Navigation.intentWithData(
+          RestaurantDetailPage.routeName, restaurant.id),
     );
   }
 
-  ListTile _buildListTileAndroid(Restaurant restaurant, BuildContext context) {
+  ListTile _buildListTileAndroid(Restaurant restaurant, BuildContext context,
+      bool isFavorite, DatabaseProvider provider) {
     return ListTile(
       contentPadding:
           const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -158,15 +196,39 @@ class RestaurantListView extends StatelessWidget {
           ]),
         ],
       ),
-      trailing: const Icon(
-        Icons.arrow_forward,
-      ),
+      trailing: isFavorite
+          ? IconButton(
+              icon: const Icon(Icons.favorite),
+              color: Colors.redAccent,
+              onPressed: () {
+                provider.removeFavorite(restaurant.id).then((message) {
+                  final snackBar = SnackBar(
+                    content: Text(
+                      message,
+                    ),
+                    duration: const Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                });
+              },
+            )
+          : IconButton(
+              icon: const Icon(Icons.favorite_border_rounded),
+              color: Colors.grey,
+              onPressed: () {
+                provider.addFavorites(restaurant).then((message) {
+                  final snackBar = SnackBar(
+                    content: Text(
+                      message,
+                    ),
+                    duration: const Duration(seconds: 3),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                });
+              },
+            ),
       onTap: () => Navigation.intentWithData(
-                    RestaurantDetailPage.routeName, restaurant.id),
-      // {
-      //   Navigator.pushNamed(context, RestaurantDetailPage.routeName,
-      //       arguments: restaurant.id);
-      // },
+          RestaurantDetailPage.routeName, restaurant.id),
     );
   }
 }

@@ -7,8 +7,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:restaurant_app_submission_dicoding/common/navigation.dart';
 import 'package:restaurant_app_submission_dicoding/data/api/api_service.dart';
+import 'package:restaurant_app_submission_dicoding/data/db/database_helper.dart';
 import 'package:restaurant_app_submission_dicoding/data/model/restaurant.dart';
 import 'package:restaurant_app_submission_dicoding/data/preferences/preferences_helper.dart';
+import 'package:restaurant_app_submission_dicoding/provider/database_provider.dart';
 import 'package:restaurant_app_submission_dicoding/provider/detail_restaurant_provider.dart';
 import 'package:restaurant_app_submission_dicoding/provider/list_restaurant_provider.dart';
 import 'package:restaurant_app_submission_dicoding/provider/preferences_provider.dart';
@@ -94,6 +96,8 @@ void main() async {
             ),
           ),
         ),
+        ChangeNotifierProvider(
+            create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper())),
       ],
       child: Consumer<PreferencesProvider>(builder: (context, provider, child) {
         return MaterialApp(

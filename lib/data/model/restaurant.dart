@@ -91,9 +91,11 @@ class Restaurant {
         description: json["description"],
         pictureId: json["pictureId"],
         city: json["city"],
-        rating: json["rating"]?.toDouble(),
+        rating: json["rating"] is String
+            ? double.tryParse(json["rating"]) ?? 0.0
+            : json["rating"]?.toDouble(),
         address: json.containsKey('address')
-            ? json['address'] == null
+            ? json['address'] != null
                 ? json["address"]
                 : null
             : null,
@@ -123,6 +125,7 @@ class Restaurant {
         "pictureId": pictureId,
         "city": city,
         "rating": rating,
+        "address": address,
         "categories": categories != null
             ? List<dynamic>.from(categories!.map((x) => x.toJson()))
             : null,

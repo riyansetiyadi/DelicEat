@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app_submission_dicoding/common/styles.dart';
+import 'package:restaurant_app_submission_dicoding/provider/database_provider.dart';
 import 'package:restaurant_app_submission_dicoding/ui/home_page.dart';
+import 'package:restaurant_app_submission_dicoding/utils/result_state.dart';
 import 'package:restaurant_app_submission_dicoding/widgets/handle_error_back_widget.dart';
 import 'package:restaurant_app_submission_dicoding/data/model/restaurant.dart';
 import 'package:flutter/material.dart';
@@ -308,10 +312,10 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                         ),
                         Consumer<ReviewRestaurantProvider>(
                           builder: (context, state, _) {
-                            if (state.state == ReviewState.init) {
+                            if (state.state == ResultState.init) {
                               return _buildCustomerReviewsLength(
                                   restaurant.customerReviews?.length, context);
-                            } else if (state.state == ReviewState.loading) {
+                            } else if (state.state == ResultState.loading) {
                               return Container(
                                 color: secondaryColor,
                                 child: Center(
@@ -324,14 +328,14 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                                             color: primaryColor,
                                           )),
                               );
-                            } else if (state.state == ReviewState.hasData) {
+                            } else if (state.state == ResultState.hasData) {
                               return _buildCustomerReviewsLength(
                                   state.customerReviews?.customerReviews.length,
                                   context);
-                            } else if (state.state == ReviewState.noData) {
+                            } else if (state.state == ResultState.noData) {
                               return _buildCustomerReviewsLength(
                                   restaurant.customerReviews?.length, context);
-                            } else if (state.state == ReviewState.error) {
+                            } else if (state.state == ResultState.error) {
                               return _buildCustomerReviewsLength(
                                   restaurant.customerReviews?.length, context);
                             } else {
@@ -386,10 +390,10 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                     ),
                     Consumer<ReviewRestaurantProvider>(
                       builder: (context, state, _) {
-                        if (state.state == ReviewState.init) {
+                        if (state.state == ResultState.init) {
                           return _buildReviewsRestaurant(
                               restaurant.customerReviews);
-                        } else if (state.state == ReviewState.loading) {
+                        } else if (state.state == ResultState.loading) {
                           return Container(
                             color: secondaryColor,
                             child: Center(
@@ -402,7 +406,7 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                                             color: primaryColor,
                                           )),
                           );
-                        } else if (state.state == ReviewState.hasData) {
+                        } else if (state.state == ResultState.hasData) {
                           WidgetsBinding.instance.addPostFrameCallback((_) {
                             final snackBar = SnackBar(
                               backgroundColor: primaryColor,
@@ -420,10 +424,10 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                           });
                           return _buildReviewsRestaurant(
                               state.customerReviews!.customerReviews);
-                        } else if (state.state == ReviewState.noData) {
+                        } else if (state.state == ResultState.noData) {
                           return _buildReviewsRestaurant(
                               restaurant.customerReviews);
-                        } else if (state.state == ReviewState.error) {
+                        } else if (state.state == ResultState.error) {
                           return _buildReviewsRestaurant(
                               restaurant.customerReviews);
                         } else {
@@ -438,6 +442,50 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
             );
           },
         ),
+        Container(
+          alignment: Alignment.topRight,
+          padding: const EdgeInsets.only(top: 60),
+          child: Consumer<DatabaseProvider>(builder: (context, provider, child) {
+            return FutureBuilder<bool>(
+                future: provider.isFavorite(restaurant.id),
+                builder: (context, snapshot) {
+                  var isFavorite = snapshot.data ?? false;
+                  if (isFavorite) {
+                    return IconButton(
+                      icon: Icon(Platform.isIOS ? Icons.favorite : CupertinoIcons.heart_fill),
+                      color: Colors.redAccent,
+                      onPressed: () {
+                        provider.removeFavorite(restaurant.id).then((message) {
+                          final snackBar = SnackBar(
+                            content: Text(
+                              message,
+                            ),
+                            duration: const Duration(seconds: 3),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        });
+                      },
+                    );
+                  } else {
+                    return IconButton(
+                      icon: Icon(Platform.isIOS ? Icons.favorite_border_rounded : CupertinoIcons.heart),
+                      color: Colors.white,
+                      onPressed: () {
+                        provider.addFavorites(restaurant).then((message) {
+                          final snackBar = SnackBar(
+                            content: Text(
+                              message,
+                            ),
+                            duration: const Duration(seconds: 3),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        });
+                      },
+                    );
+                  }
+                });
+          }),
+        )
       ],
     );
   }

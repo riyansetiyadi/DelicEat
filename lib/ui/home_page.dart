@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant_app_submission_dicoding/common/styles.dart';
+import 'package:restaurant_app_submission_dicoding/ui/favorites_page.dart';
 import 'package:restaurant_app_submission_dicoding/ui/restaurant_detail_page.dart';
 import 'package:restaurant_app_submission_dicoding/ui/restaurant_list_page.dart';
 import 'package:restaurant_app_submission_dicoding/ui/settings_page.dart';
@@ -34,6 +35,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _listWidget = const [
     RestaurantListPage(),
+    FavoritesPage(),
     SettingsPage(),
   ];
 
@@ -42,6 +44,10 @@ class _HomePageState extends State<HomePage> {
       icon:
           Icon(Platform.isIOS ? CupertinoIcons.list_bullet : Icons.restaurant),
       label: _headlineText,
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Platform.isIOS ? CupertinoIcons.heart_fill : Icons.favorite),
+      label: FavoritesPage.favoritesTitle,
     ),
     BottomNavigationBarItem(
       icon: Icon(Platform.isIOS ? CupertinoIcons.settings : Icons.settings),
