@@ -59,6 +59,12 @@ ThemeData lightTheme = ThemeData(
   ),
   inputDecorationTheme: const InputDecorationTheme(
       floatingLabelStyle: TextStyle(color: Colors.black)),
+      snackBarTheme: const SnackBarThemeData(
+        backgroundColor: secondaryColor,
+        contentTextStyle: TextStyle(
+          color: primaryColor
+        )
+      )
 );
 
 ThemeData darkTheme = ThemeData.dark().copyWith(
@@ -84,4 +90,10 @@ ThemeData darkTheme = ThemeData.dark().copyWith(
   ),
   inputDecorationTheme: const InputDecorationTheme(
       floatingLabelStyle: TextStyle(color: Colors.white)),
+            snackBarTheme: const SnackBarThemeData(
+        backgroundColor: darkSecondaryColor,
+        contentTextStyle: TextStyle(
+          color: darkPrimaryColor
+        )
+      )
 );
