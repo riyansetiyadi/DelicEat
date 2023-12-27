@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app_submission_dicoding/common/styles.dart';
+import 'package:restaurant_app_submission_dicoding/utils/result_state.dart';
 import 'package:restaurant_app_submission_dicoding/widgets/custom_cupertino_search_text_field_widget.dart';
 import 'package:restaurant_app_submission_dicoding/widgets/handle_error_refresh_widget.dart';
 import 'package:restaurant_app_submission_dicoding/widgets/restaurant_list_view_widget.dart';
