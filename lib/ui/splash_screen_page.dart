@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app_submission_dicoding/common/styles.dart';
-import 'package:restaurant_app_submission_dicoding/provider/preferences_provider.dart';
-import 'package:restaurant_app_submission_dicoding/ui/home_page.dart';
-import 'package:restaurant_app_submission_dicoding/widgets/platform_widget.dart';
+import 'package:deliceat/common/styles.dart';
+import 'package:deliceat/provider/preferences_provider.dart';
+import 'package:deliceat/ui/home_page.dart';
+import 'package:deliceat/widgets/platform_widget.dart';
 
 class SplashScreenPage extends StatelessWidget {
   static const routeName = '/splash_screen_page';

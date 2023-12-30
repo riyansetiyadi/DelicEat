@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app_submission_dicoding/common/styles.dart';
-import 'package:restaurant_app_submission_dicoding/data/model/restaurant.dart';
-import 'package:restaurant_app_submission_dicoding/provider/database_provider.dart';
-import 'package:restaurant_app_submission_dicoding/utils/result_state.dart';
-import 'package:restaurant_app_submission_dicoding/widgets/handle_error_refresh_widget.dart';
-import 'package:restaurant_app_submission_dicoding/widgets/platform_widget.dart';
-import 'package:restaurant_app_submission_dicoding/widgets/restaurant_list_view_widget.dart';
+import 'package:deliceat/common/styles.dart';
+import 'package:deliceat/data/model/restaurant.dart';
+import 'package:deliceat/provider/database_provider.dart';
+import 'package:deliceat/utils/result_state.dart';
+import 'package:deliceat/widgets/handle_error_refresh_widget.dart';
+import 'package:deliceat/widgets/platform_widget.dart';
+import 'package:deliceat/widgets/restaurant_list_view_widget.dart';
 
 class FavoritesPage extends StatelessWidget {
   static const String favoritesTitle = 'Favorites';

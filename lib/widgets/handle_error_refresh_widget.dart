@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:restaurant_app_submission_dicoding/common/styles.dart';
+import 'package:deliceat/common/styles.dart';
 
 class ErrorRefresh extends StatelessWidget {
   const ErrorRefresh(

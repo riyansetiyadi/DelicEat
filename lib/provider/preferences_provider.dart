@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app_submission_dicoding/common/styles.dart';
-import 'package:restaurant_app_submission_dicoding/data/preferences/preferences_helper.dart';
+import 'package:deliceat/common/styles.dart';
+import 'package:deliceat/data/preferences/preferences_helper.dart';
 
 class PreferencesProvider extends ChangeNotifier {
   PreferencesHelper preferencesHelper;

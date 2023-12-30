@@ -3,9 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app_submission_dicoding/data/model/restaurant.dart';
-import 'package:restaurant_app_submission_dicoding/provider/database_provider.dart';
-import 'package:restaurant_app_submission_dicoding/widgets/restaurant_list_view_widget.dart';
+import 'package:deliceat/data/model/restaurant.dart';
+import 'package:deliceat/provider/database_provider.dart';
+import 'package:deliceat/widgets/restaurant_list_view_widget.dart';
 
 import '../mock/database_helper.mocks.dart';
 

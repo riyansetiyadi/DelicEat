@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:restaurant_app_submission_dicoding/data/model/restaurant.dart';
+import 'package:deliceat/data/model/restaurant.dart';
 
 class ApiService {
   static const String _baseUrl = 'https://restaurant-api.dicoding.dev';

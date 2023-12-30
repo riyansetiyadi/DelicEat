@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:restaurant_app_submission_dicoding/utils/date_time_helper.dart';
+import 'package:deliceat/utils/date_time_helper.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

@@ -1,7 +1,7 @@
 import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:restaurant_app_submission_dicoding/utils/background_service.dart';
-import 'package:restaurant_app_submission_dicoding/utils/date_time_helper.dart';
+import 'package:deliceat/utils/background_service.dart';
+import 'package:deliceat/utils/date_time_helper.dart';
 
 class SchedulingProvider extends ChangeNotifier {
   bool _isScheduled = false;

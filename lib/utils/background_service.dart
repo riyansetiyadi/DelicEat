@@ -1,11 +1,11 @@
 import 'dart:ui';
 import 'dart:isolate';
 
-import 'package:restaurant_app_submission_dicoding/data/api/api_service.dart';
-import 'package:restaurant_app_submission_dicoding/data/model/restaurant.dart';
-import 'package:restaurant_app_submission_dicoding/main.dart';
-import 'package:restaurant_app_submission_dicoding/utils/notification_helper.dart';
-import 'package:restaurant_app_submission_dicoding/utils/random_item_from_list_function.dart';
+import 'package:deliceat/data/api/api_service.dart';
+import 'package:deliceat/data/model/restaurant.dart';
+import 'package:deliceat/main.dart';
+import 'package:deliceat/utils/notification_helper.dart';
+import 'package:deliceat/utils/random_item_from_list_function.dart';
 
 final ReceivePort port = ReceivePort();
 

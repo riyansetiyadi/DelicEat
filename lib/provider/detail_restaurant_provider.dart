@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:restaurant_app_submission_dicoding/data/api/api_service.dart';
-import 'package:restaurant_app_submission_dicoding/data/model/restaurant.dart';
+import 'package:deliceat/data/api/api_service.dart';
+import 'package:deliceat/data/model/restaurant.dart';
 import 'package:flutter/material.dart';
-import 'package:restaurant_app_submission_dicoding/utils/result_state.dart';
+import 'package:deliceat/utils/result_state.dart';
 
 class DetailRestaurantProvider extends ChangeNotifier {
   final ApiService apiService;

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:restaurant_app_submission_dicoding/common/styles.dart';
-import 'package:restaurant_app_submission_dicoding/ui/home_page.dart';
+import 'package:deliceat/common/styles.dart';
+import 'package:deliceat/ui/home_page.dart';
 
 class ErrorBack extends StatelessWidget {
   const ErrorBack(

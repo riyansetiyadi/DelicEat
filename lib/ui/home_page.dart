@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:restaurant_app_submission_dicoding/common/styles.dart';
-import 'package:restaurant_app_submission_dicoding/ui/favorites_page.dart';
-import 'package:restaurant_app_submission_dicoding/ui/restaurant_detail_page.dart';
-import 'package:restaurant_app_submission_dicoding/ui/restaurant_list_page.dart';
-import 'package:restaurant_app_submission_dicoding/ui/settings_page.dart';
-import 'package:restaurant_app_submission_dicoding/utils/notification_helper.dart';
-import 'package:restaurant_app_submission_dicoding/widgets/platform_widget.dart';
+import 'package:deliceat/common/styles.dart';
+import 'package:deliceat/ui/favorites_page.dart';
+import 'package:deliceat/ui/restaurant_detail_page.dart';
+import 'package:deliceat/ui/restaurant_list_page.dart';
+import 'package:deliceat/ui/settings_page.dart';
+import 'package:deliceat/utils/notification_helper.dart';
+import 'package:deliceat/widgets/platform_widget.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = '/home_page';

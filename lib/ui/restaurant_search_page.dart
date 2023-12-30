@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app_submission_dicoding/common/styles.dart';
-import 'package:restaurant_app_submission_dicoding/utils/result_state.dart';
-import 'package:restaurant_app_submission_dicoding/widgets/custom_cupertino_search_text_field_widget.dart';
-import 'package:restaurant_app_submission_dicoding/widgets/handle_error_refresh_widget.dart';
-import 'package:restaurant_app_submission_dicoding/widgets/restaurant_list_view_widget.dart';
-import 'package:restaurant_app_submission_dicoding/provider/search_restaurant_provider.dart';
-import 'package:restaurant_app_submission_dicoding/widgets/platform_widget.dart';
+import 'package:deliceat/common/styles.dart';
+import 'package:deliceat/utils/result_state.dart';
+import 'package:deliceat/widgets/custom_cupertino_search_text_field_widget.dart';
+import 'package:deliceat/widgets/handle_error_refresh_widget.dart';
+import 'package:deliceat/widgets/restaurant_list_view_widget.dart';
+import 'package:deliceat/provider/search_restaurant_provider.dart';
+import 'package:deliceat/widgets/platform_widget.dart';
 
 class RestaurantSearchPage extends StatefulWidget {
   static const routeName = '/restaurant_search_page';

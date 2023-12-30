@@ -2,11 +2,11 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app_submission_dicoding/common/styles.dart';
-import 'package:restaurant_app_submission_dicoding/provider/preferences_provider.dart';
-import 'package:restaurant_app_submission_dicoding/provider/scheduling_provider.dart';
-import 'package:restaurant_app_submission_dicoding/widgets/coming_soon_feature_dialog_widget.dart';
-import 'package:restaurant_app_submission_dicoding/widgets/platform_widget.dart';
+import 'package:deliceat/common/styles.dart';
+import 'package:deliceat/provider/preferences_provider.dart';
+import 'package:deliceat/provider/scheduling_provider.dart';
+import 'package:deliceat/widgets/coming_soon_feature_dialog_widget.dart';
+import 'package:deliceat/widgets/platform_widget.dart';
 
 class SettingsPage extends StatelessWidget {
   static const String settingsTitle = 'Settings';

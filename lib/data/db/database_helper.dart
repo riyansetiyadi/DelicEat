@@ -1,4 +1,4 @@
-import 'package:restaurant_app_submission_dicoding/data/model/restaurant.dart';
+import 'package:deliceat/data/model/restaurant.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
