@@ -210,7 +210,7 @@ class CustomerReview {
   Map<String, dynamic> toJson() => {
         "name": name,
         "review": review,
-        "date": date,
+        "date": dateTimeHelper.convertDateTimeToString(date),
       };
 }
 
