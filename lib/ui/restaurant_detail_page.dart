@@ -134,12 +134,17 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        restaurant.name,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge
-                            ?.copyWith(color: Colors.white),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            restaurant.name,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(color: Colors.white),
+                          ),
+                        ],
                       ),
                       if (restaurant.categories != null)
                         Row(
@@ -216,6 +221,57 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                                         Theme.of(context).textTheme.labelLarge),
                                 horizontalTitleGap: 0,
                               )),
+                    Expanded(child: Consumer<DatabaseProvider>(
+                        builder: (context, provider, child) {
+                      return FutureBuilder<bool>(
+                          future: provider.isFavorite(restaurant.id),
+                          builder: (context, snapshot) {
+                            var isFavorite = snapshot.data ?? false;
+                            if (isFavorite) {
+                              return IconButton(
+                                icon: Icon(Platform.isIOS
+                                    ? Icons.favorite
+                                    : CupertinoIcons.heart_fill),
+                                color: Colors.redAccent,
+                                onPressed: () {
+                                  provider
+                                      .removeFavorite(restaurant.id)
+                                      .then((message) {
+                                    final snackBar = SnackBar(
+                                      content: Text(
+                                        message,
+                                      ),
+                                      duration: const Duration(seconds: 3),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  });
+                                },
+                              );
+                            } else {
+                              return IconButton(
+                                icon: Icon(Platform.isIOS
+                                    ? Icons.favorite_border_rounded
+                                    : CupertinoIcons.heart),
+                                color: Colors.grey,
+                                onPressed: () {
+                                  provider
+                                      .addFavorites(restaurant)
+                                      .then((message) {
+                                    final snackBar = SnackBar(
+                                      content: Text(
+                                        message,
+                                      ),
+                                      duration: const Duration(seconds: 3),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  });
+                                },
+                              );
+                            }
+                          });
+                    })),
                     Expanded(
                       child: defaultTargetPlatform == TargetPlatform.iOS
                           ? CupertinoListTile(
@@ -442,50 +498,6 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
             );
           },
         ),
-        Container(
-          alignment: Alignment.topRight,
-          padding: const EdgeInsets.only(top: 60),
-          child: Consumer<DatabaseProvider>(builder: (context, provider, child) {
-            return FutureBuilder<bool>(
-                future: provider.isFavorite(restaurant.id),
-                builder: (context, snapshot) {
-                  var isFavorite = snapshot.data ?? false;
-                  if (isFavorite) {
-                    return IconButton(
-                      icon: Icon(Platform.isIOS ? Icons.favorite : CupertinoIcons.heart_fill),
-                      color: Colors.redAccent,
-                      onPressed: () {
-                        provider.removeFavorite(restaurant.id).then((message) {
-                          final snackBar = SnackBar(
-                            content: Text(
-                              message,
-                            ),
-                            duration: const Duration(seconds: 3),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        });
-                      },
-                    );
-                  } else {
-                    return IconButton(
-                      icon: Icon(Platform.isIOS ? Icons.favorite_border_rounded : CupertinoIcons.heart),
-                      color: Colors.white,
-                      onPressed: () {
-                        provider.addFavorites(restaurant).then((message) {
-                          final snackBar = SnackBar(
-                            content: Text(
-                              message,
-                            ),
-                            duration: const Duration(seconds: 3),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        });
-                      },
-                    );
-                  }
-                });
-          }),
-        )
       ],
     );
   }
@@ -586,7 +598,6 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                     textCapitalization: TextCapitalization.words,
                     decoration: const InputDecoration(
                       labelText: 'Your Name',
-                      labelStyle: TextStyle(color: Colors.black),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           color: secondaryColor,
@@ -612,7 +623,6 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                     textCapitalization: TextCapitalization.sentences,
                     decoration: const InputDecoration(
                       labelText: 'Your Review',
-                      labelStyle: TextStyle(color: Colors.black),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           color: secondaryColor,
