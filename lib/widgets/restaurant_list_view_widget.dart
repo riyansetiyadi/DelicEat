@@ -90,6 +90,9 @@ class RestaurantListView extends StatelessWidget {
               tag: restaurant.pictureId,
               child: Image.network(
                 'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
+                errorBuilder: (_, __, ___) {
+                  return const Icon(Icons.error_outline);
+                },
                 fit: BoxFit.cover,
               )),
         ),
@@ -167,6 +170,9 @@ class RestaurantListView extends StatelessWidget {
               tag: restaurant.pictureId,
               child: Image.network(
                 'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
+                errorBuilder: (_, __, ___) {
+                  return const Icon(Icons.error_outline);
+                },
                 fit: BoxFit.cover,
               )),
         ),

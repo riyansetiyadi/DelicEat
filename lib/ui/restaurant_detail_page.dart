@@ -181,6 +181,9 @@ class _RestaurantDetailPageState extends State<RestaurantDetailPage> {
                           tag: restaurant.pictureId,
                           child: Image.network(
                             'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
+                            errorBuilder: (_, __, ___) {
+                              return const Icon(Icons.error_outline);
+                            },
                             height: double.infinity,
                             width: double.infinity,
                             fit: BoxFit.cover,
