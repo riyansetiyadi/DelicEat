@@ -117,7 +117,7 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
 
   Widget _titleAppBar(BuildContext context) {
     return Text(
-      'Restaurant App',
+      'Deliceat',
       style: Theme.of(context).textTheme.headlineMedium,
     );
   }

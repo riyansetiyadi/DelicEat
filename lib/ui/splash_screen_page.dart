@@ -45,7 +45,7 @@ class SplashScreenPage extends StatelessWidget {
           ),
           SizedBox(
             width: double.infinity,
-            child: Text('Restaurant App',
+            child: Text('Deliceat',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineMedium),
           ),
