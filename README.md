@@ -10,7 +10,7 @@ Deliceat menyajikan daftar restoran dengan tampilan yang menarik, termasuk gamba
 Fitur pencarian memungkinkan pengguna untuk mencari restoran berdasarkan nama, kategori, atau menu. Pencarian ini membantu pengguna menemukan restoran dengan cepat dan efisien sesuai dengan keinginan mereka.
 
 ### 3. Detail Restoran
-Pengguna dapat melihat detail Restoran seperti nama, gambar, kategori, deskripsi, alamat, menu dan review pengguna.
+Pengguna dapat melihat detail Restoran seperti nama, gambar, kategori, deskripsi, alamat, menu, rating dan review pengguna.
 
 ### 4. Review Restoran
 Pengguna dapat melihat serta menambahkan review pada restoran sehingga dapat dengan mudah memutuskan restoran yang ingin dikunjungi.
