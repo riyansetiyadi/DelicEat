@@ -1,4 +1,4 @@
-package com.example.deliceat
+package com.android.deliceat
 
 import io.flutter.embedding.android.FlutterActivity
 
